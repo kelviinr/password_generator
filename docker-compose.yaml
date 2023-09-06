@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  PasswordGenerator:
+    image: gerador_senhas_apache:1.0.2
+    networks:
+      ipvlan_net:
+        ipv4_address: 192.168.60.107
+    ports:
+      - 8000:80
+    volumes:
+      - password_generator:/var/lib/docker/password_generator
+
+volumes:
+  password_generator:
+networks:
+  ipvlan_net:
+     external:
+       name: ipvlan_net
+
