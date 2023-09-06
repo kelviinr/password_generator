@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Senha</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 100px;
+    padding: 0;
+    background-image: url('https://underprotection.com.br/wp-content/uploads/2022/05/Blog-Setembro_Prancheta-1-copia-800x450.png'); /* Substitua pelo caminho da imagem desejada */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  .container {
+    max-width: 600px;
+    margin:  auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  button {
+    padding: 10px 20px;
+    margin-top: 5px;
+    background-color: #333; /* Cor mais escura para o botão */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Gerador de Senha</h2>
+  <form id="password-generator">
+    <label for="password-length">Comprimento da Senha:</label>
+    <input type="number" id="password-length" name="password-length" min="6" max="20" value="12">
+    <br>
+    <label for="generated-password">Senha Gerada:</label>
+    <input type="text" id="generated-password" readonly>
+    <br>
+    <button type="button" onclick="generatePassword()">Gerar Senha</button>
+  </form>
+</div>
+
+<script>
+function generatePassword() {
+  const length = document.getElementById("password-length").value;
+  const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
+  let password = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset.charAt(randomIndex);
+  }
+
+  document.getElementById("generated-password").value = password;
+}
+</script>
+</body>
+</html>
+
