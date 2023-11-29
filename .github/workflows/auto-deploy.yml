@@ -11,12 +11,10 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2.5.0  # Versão mais recente compatível com Node.js 16
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'  # Substitua pela versão do Node.js desejada
+      uses: actions/setup-node@v4  # Versão mais recente da ação setup-node
 
     - name: Set up Docker Compose
       run: |
@@ -24,7 +22,7 @@ jobs:
         sudo docker-compose -f /home/password_generator/docker-compose.yml up -d
 
     - name: SSH into Server and Update Repository
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v0.7.0  # Versão mais recente da ação ssh-action
       with:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
