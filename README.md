@@ -14,7 +14,7 @@ gerador_senhas_apache:1.0.2
 
 Create Network Ipvlan
 ```
-docker network create -d ipvlan --subnet="0.0.0.1/24" --gateway "0.0.0.253" -o parent=ens192 ipvlan_net
+docker network create -d ipvlan --subnet="192.168.60.0/24" --gateway "0.0.0.253" -o parent=ens192 ipvlan_net
 ```
 
 ```
