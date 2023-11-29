@@ -5,14 +5,15 @@ on:
     branches:
       - main
 
+name: 🚀 Deploy website on push
 jobs:
-  build:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4  # Use a versão mais recente da ação checkout
-
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+    
     - name: Set up Docker Compose
       run: |
         sudo apt-get -yqq install docker-compose
@@ -39,6 +40,3 @@ jobs:
         username: root
         key: ${{ secrets.TESTE }}
         port: 22
-        script: |
-          cd /home/servidor/password_generator/
-          docker-compose up --detach
