@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2.4.3  # Atualize para a versão mais recente compatível com Node.js 16
 
     - name: Set up Docker Compose
       run: |
