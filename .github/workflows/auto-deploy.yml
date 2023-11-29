@@ -32,10 +32,13 @@ jobs:
         # Substitua 'home/password_generator/index.html' pelo caminho dos seus arquivos HTML.
         htmlhint home/password_generator/index.html
 
-    - name: Run Docker Compose
-      run: |
-        if [ $? -eq 0 ]; then
+    - name: SSH into VM and run Docker Compose
+      uses: appleboy/ssh-action@master
+      with:
+        host: 192.168.60.52 
+        username: root
+        key: SHA256:/gY/IQwqgqenVEr/1OPLnlfgELyIRy268c+4GY61jhQ
+        port: 22 
+        script: |
+          cd /caminho/do/seu/projeto
           docker-compose up --detach
-        else
-          echo "Tests failed. Skipping Docker Compose."
-        fi
