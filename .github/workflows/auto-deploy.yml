@@ -35,10 +35,10 @@ jobs:
     - name: SSH into VM and run Docker Compose
       uses: appleboy/ssh-action@master
       with:
-        host: 192.168.60.52 
+        host: 192.168.60.52
         username: root
-        key: SHA256:/gY/IQwqgqenVEr/1OPLnlfgELyIRy268c+4GY61jhQ
-        port: 22 
+        key: ${{ secrets.TESTE}}
+        port: 22
         script: |
-          cd /caminho/do/seu/projeto
+          cd /home/servidor/password_generator/
           docker-compose up --detach
