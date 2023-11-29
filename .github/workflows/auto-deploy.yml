@@ -29,8 +29,7 @@ jobs:
 
     - name: Run HTML tests
       run: |
-        # Substitua 'home/password_generator/index.html' pelo caminho dos seus arquivos HTML.
-        htmlhint home/password_generator/index.html
+        htmlhint /home/password_generator/index.html
 
     - name: SSH into VM and run Docker Compose
       uses: appleboy/ssh-action@master
