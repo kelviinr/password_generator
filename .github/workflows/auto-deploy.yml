@@ -37,7 +37,7 @@ jobs:
       with:
         host: 192.168.60.52
         username: root
-        key: ${{ secrets.TESTE}}
+        key: ${{ secrets.TESTE }}
         port: 22
         script: |
           cd /home/servidor/password_generator/
