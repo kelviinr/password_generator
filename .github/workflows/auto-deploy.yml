@@ -1,41 +1,47 @@
-name: gerador_senhas_autodeploy
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - main
+      - main  # altere para o nome da sua branch principal, se necessário
 
 jobs:
-  web-deploy:
-    name: Deploy
+  deploy:
     runs-on: ubuntu-latest
-    steps:
-    - name: Get latest code
-      uses: actions/checkout@v3
-    
-    - name: Set up Docker Compose
-      run: |
-        sudo apt-get -yqq install docker-compose
-        docker-compose --version
 
-    - name: Install Node.js and npm
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: 14
 
-    - name: Install HTMLHint
+    - name: Install Dependencies
+      run: npm install  # ou o comando necessário para instalar as dependências do seu projeto
+
+    - name: Build
+      run: npm run build  # ou o comando necessário para construir o seu projeto
+
+    - name: Verify HTML
       run: |
-        npm install -g htmlhint
+        cd /home/password_generator/
+        # Adicione aqui o comando para verificar o arquivo HTML, por exemplo:
+        npx html-validate index.html
+        # Certifique-se de instalar as ferramentas necessárias antes de executar este comando
 
-    - name: Run HTML tests
-      run: |
-        # Substitua pelo caminho correto do seu arquivo HTML.
-        htmlhint /home/servidor/password_generator/index.html
-
-    - name: SSH into VM and run Docker Compose
-      uses: appleboy/ssh-action@master
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2
       with:
-        host: 192.168.60.52
-        username: root
-        key: ${{ secrets.TESTE }}
-        port: 22
+        server: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        local: "/home/password_generator/"  # substitua com o diretório do seu build
+        remote: "/home/password_generator/"  # substitua com o caminho no servidor onde você deseja implantar
+
+    - name: Docker Compose Up
+      run: |
+        cd /home/password_generator/
+        docker-compose up -d
