@@ -29,12 +29,12 @@ jobs:
 
     - name: Run HTML tests
       run: |
-        # Substitua 'src/**/*.html' pelo padrão de seus arquivos HTML.
+        # Substitua 'home/password_generator/index.html' pelo caminho dos seus arquivos HTML.
         htmlhint home/password_generator/index.html
 
     - name: Run Docker Compose
       run: |
-        if [ ${{ success() }} == "true" ]; then
+        if [ $? -eq 0 ]; then
           docker-compose up --detach
         else
           echo "Tests failed. Skipping Docker Compose."
