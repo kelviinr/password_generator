@@ -13,9 +13,6 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2.5.0 # Versão mais recente compatível com Node.js 16
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4 # Versão mais recente da ação setup-node
-
     - name: SSH into Server and Update Repository
       uses: appleboy/ssh-action@master # Versão mais recente da ação ssh-action
       with:
