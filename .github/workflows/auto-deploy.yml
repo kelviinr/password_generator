@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # altere para o nome da sua branch principal, se necessário
+      - main  # Substitua 'main' pelo nome da sua branch principal, se for diferente
 
 jobs:
   deploy:
@@ -13,35 +13,18 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 14
-
-    - name: Install Dependencies
-      run: npm install  # ou o comando necessário para instalar as dependências do seu projeto
-
-    - name: Build
-      run: npm run build  # ou o comando necessário para construir o seu projeto
-
-    - name: Verify HTML
+    - name: Set up Docker Compose
       run: |
-        cd /home/password_generator/
-        # Adicione aqui o comando para verificar o arquivo HTML, por exemplo:
-        npx html-validate index.html
-        # Certifique-se de instalar as ferramentas necessárias antes de executar este comando
+        sudo docker-compose -f /home/password_generator/docker-compose.yml down
+        sudo docker-compose -f /home/password_generator/docker-compose.yml up -d
 
-    - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@v2
+    - name: SSH into Server and Update Repository
+      uses: appleboy/ssh-action@v0.5.4
       with:
-        server: ${{ secrets.SERVER_IP }}
+        host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.SERVER_PORT }}
-        local: "/home/password_generator/"  # substitua com o diretório do seu build
-        remote: "/home/password_generator/"  # substitua com o caminho no servidor onde você deseja implantar
-
-    - name: Docker Compose Up
-      run: |
-        cd /home/password_generator/
-        docker-compose up -d
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        script: |
+          cd /home/password_generator/
+          git pull origin main  # Substitua 'main' pelo nome da sua branch principal, se for diferente
