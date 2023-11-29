@@ -1,0 +1,41 @@
+name: gerador_senhas_autodeploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Compose
+      run: |
+        sudo apt-get -yqq install docker-compose
+        docker-compose --version
+
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install HTMLHint
+      run: |
+        npm install -g htmlhint
+
+    - name: Run HTML tests
+      run: |
+        # Substitua 'src/**/*.html' pelo padrão de seus arquivos HTML.
+        htmlhint home/password_generator/index.html
+
+    - name: Run Docker Compose
+      run: |
+        if [ ${{ success() }} == "true" ]; then
+          docker-compose up --detach
+        else
+          echo "Tests failed. Skipping Docker Compose."
+        fi
