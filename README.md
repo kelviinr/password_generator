@@ -9,7 +9,7 @@ Utilizado docker para execução do container.
 
 Versão imagem:
 ```
-gerador_senhas_apache:1.0.2
+gerador_senhas_apache:1.0.1
 ```
 
 Create Network Ipvlan
