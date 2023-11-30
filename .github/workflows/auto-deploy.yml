@@ -8,11 +8,11 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
     
-      
     - name: SSH into Server and Update Repository
       uses: appleboy/ssh-action@master # Versão mais recente da ação ssh-action
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        password: ${{ secrets.SSH_PASSWORD_PRIVATE_KEY }}
         port: ${{ secrets.SERVER_PORT }}
