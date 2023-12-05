@@ -1,5 +1,6 @@
 on: push
 
+teste
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
