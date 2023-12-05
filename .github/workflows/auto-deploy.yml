@@ -9,6 +9,7 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
     
+      
     - name: SSH into Server and Update Repository
       uses: appleboy/ssh-action@master # Versão mais recente da ação ssh-action
       with:
